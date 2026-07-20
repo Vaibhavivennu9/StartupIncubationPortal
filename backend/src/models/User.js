@@ -21,7 +21,7 @@ const userSchema=new mangoose.Schema({
     lowercase: true
 },
 phone: {
-    type: String,
+    type: Number,
     default: ""
 },
 otp:{

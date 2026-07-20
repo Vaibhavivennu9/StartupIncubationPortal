@@ -97,7 +97,7 @@ const getAllStartups = async (req, res) => {
 const getStartupById = async (req, res) => {
     try {
 
-        const startup = await Startup.findById(req.params.id);
+        const startup = await Startup.findById(req.params.id).populate("createdBy", "name email");
 
         if (!startup) {
             return res.status(404).json({

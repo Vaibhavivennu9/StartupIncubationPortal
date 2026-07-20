@@ -16,8 +16,11 @@ const RegisterUser = async (req, res) => {
         email = email.trim().toLowerCase();
         role = role.trim().toLowerCase();
         role = role.charAt(0).toUpperCase() + role.slice(1);
-
-
+           if(role==="admin"){
+               return res.status(403).json({
+            message:"Admin registration is not allowed."
+          });
+        }
         if (!validator.isEmail(email)) {
             return res.status(400).json({
                 message: "Invalid email format"

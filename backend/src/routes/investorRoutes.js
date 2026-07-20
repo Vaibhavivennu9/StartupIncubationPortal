@@ -7,7 +7,8 @@ const roleMiddleware = require("../middlewares/roleMiddleware");
 
 const {
     expressInterest,
-    getMyInterests
+    getMyInterests,
+    investorDashboard
 } = require("../controllers/investorController");
 
 router.post(
@@ -23,5 +24,16 @@ router.get(
     roleMiddleware("investor"),
     getMyInterests
 );
+router.get(
+    "/dashboard",
+    authMiddleware,
+    roleMiddleware("investor"),
+    investorDashboard
+);
+console.log("Investor Routes Loaded");
+
+router.get("/test", (req, res) => {
+    res.send("Investor Route Working");
+});
 
 module.exports = router;

@@ -64,8 +64,42 @@ const getMyInterests = async (req, res) => {
     }
 
 };
+const investorDashboard = async (req, res) => {
 
+    try {
+
+        const totalStartups = await Startup.countDocuments();
+
+        const myInterests = await Interest.find({
+            investor: req.user.id
+        });
+
+        const totalInvestments = myInterests.length;
+
+        const totalAmount = myInterests.reduce(
+            (sum, item) => sum + (item.amount || 0),
+            0
+        );
+
+        res.status(200).json({
+            totalStartups,
+            totalInvestments,
+            totalAmount,
+            recommended: totalStartups,
+            recentInvestments: myInterests
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            message: error.message
+        });
+
+    }
+
+};
 module.exports = {
     expressInterest,
-    getMyInterests
+    getMyInterests,
+    investorDashboard
 };
